@@ -46,7 +46,7 @@ public class Drop extends ApplicationAdapter {
 		dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
 		rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
 
-		rainMusic.isLooping();
+		rainMusic.setLooping(true);
 		rainMusic.play();
 
 		camera = new OrthographicCamera();
