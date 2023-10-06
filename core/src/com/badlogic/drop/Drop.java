@@ -5,8 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
@@ -18,6 +20,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 import java.util.Iterator;
 
 public class Drop extends ApplicationAdapter {
+	private int score;
+	private BitmapFont font;
 	private Texture bucketImage;
 	private Texture dropImage;
 	private Sound dropSound;
@@ -40,6 +44,11 @@ public class Drop extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+		score = 0;
+
+		font = new BitmapFont();
+		font.setColor(Color.WHITE);
+
 		dropImage = new Texture(Gdx.files.internal("droplet.png"));
 		bucketImage = new Texture(Gdx.files.internal("bucket.png"));
 
@@ -67,6 +76,10 @@ public class Drop extends ApplicationAdapter {
 	@Override
 	public void render () {
 		ScreenUtils.clear(0, 0, 0.2f, 1);
+
+		batch.begin();
+		font.draw(batch, "Score: " + score, 10, 20);
+		batch.end();
 
 		camera.update();
 
@@ -98,6 +111,8 @@ public class Drop extends ApplicationAdapter {
 			if (raindrop.overlaps(bucket)) {
 				dropSound.play();
 				iterator.remove();
+
+				score++;
 			}
 		}
 
